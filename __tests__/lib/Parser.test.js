@@ -14,24 +14,33 @@ describe("Parser", () => {
     tokenStream = null;
   });
 
-  it.only("returns ast without error", () => {
-    const code = `print([1.5 2.5])\n[a, b] = eig(H)`;
-    genParser(code);
-    const ast = parser.parse();
-    logger(ast);
-  });
+  // it.only("returns ast without error", () => {
+  //   const code = `print([1.5 2.5])\n[a, b] = eig(H)`;
+  //   genParser(code);
+  //   const ast = parser.parse();
+  // });
 
   describe("Parse Methods", () => {
-    describe("delimited", () => {
-      genParser("(a, b, c)");
-      const args = parser.delimited.apply(parser, [
-        "(",
-        ")",
-        ",",
-        parser.parseVarName.bind(parser)
-      ]);
+    describe("parseAtom", () => {
+      test("returns correct token", () => {
+        genParser("12345");
+        const tok = parser.parseAtom();
+        expect(tok).to.eql({ type: "num", value: 12345 });
+      });
+    });
 
-      expect(args).to.eql(["a", "b", "c"]);
+    describe("delimited", () => {
+      it("returns correct array of parse arguments", () => {
+        genParser("(a, b, c)");
+        const args = parser.delimited.apply(parser, [
+          "(",
+          ")",
+          ",",
+          parser.parseVarName.bind(parser)
+        ]);
+
+        expect(args).to.eql(["a", "b", "c"]);
+      });
     });
 
     describe("parseCall", () => {

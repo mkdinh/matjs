@@ -7,6 +7,13 @@ describe("Transpiler", () => {
     transpiler = new Transpiler();
   });
 
+  describe("js", () => {
+    test("throws error if token type is unknown", () => {
+      const tok = { type: "foo", value: "bar" };
+      expect(transpiler.js.bind(tok)).to.throw();
+    });
+  });
+
   describe("jsAtom", () => {
     test("return a stringified value for type 'str'", () => {
       const strExpr = { type: "str", value: "Hello There!" };
@@ -60,7 +67,7 @@ describe("Transpiler", () => {
         ]
       };
 
-      expect(transpiler.jsArray(expr)).to.equal("H[i][j][k]");
+      expect(transpiler.jsArray(expr)).to.match(/H\[i\]\[j\]\[k\]/);
     });
 
     test("action 'create' returns delimited array string", () => {
@@ -104,7 +111,7 @@ describe("Transpiler", () => {
           right: { type: "num", value: 2 }
         }
       };
-      expect(transpiler.jsAssign(expr)).to.equal("var sum=(1+2)");
+      expect(transpiler.jsAssign(expr)).to.equal("sum=(1+2)");
     });
   });
 
@@ -135,7 +142,6 @@ describe("Transpiler", () => {
         }
       };
 
-      logger(transpiler.jsFunc(expr));
       expect(transpiler.jsFunc(expr)).to.match(/\(function(.*){.*}\)/);
     });
   });
@@ -146,5 +152,112 @@ describe("Transpiler", () => {
 
   describe("jsCall", () => {
     test("run without error", () => {});
+  });
+
+  describe("Helpers", () => {
+    describe("makeVar", () => {
+      test("returns the correct name", () => {
+        expect(transpiler.makeVar("sum")).to.equal("sum");
+      });
+    });
+
+    describe("declare vars", () => {
+      test("join the array by ';\\n'", () => {
+        transpiler.vars = ["a", "b", "c"];
+        expect(transpiler.declareVars()).to.equal("var a;\nvar b;\nvar c;\n");
+        transpiler.vars = [];
+      });
+    });
+
+    describe("combineStr", () => {
+      test("joins all element in array with \\n", () => {
+        expect(transpiler.combineStr(["a", "b", "c"])).to.equal("a\nb\nc");
+      });
+    });
+    describe("getIdentifier", () => {
+      test("type 'var", () => {
+        const expr = { left: { type: "var", value: "sum" } };
+        expect(transpiler.getIdentifier(expr)).to.equal("sum");
+      });
+
+      test("type 'array' && action 'spread'", () => {
+        const expr = {
+          left: {
+            type: "array",
+            action: "spread",
+            identifier: { type: "var", value: "sum" }
+          }
+        };
+        expect(transpiler.getIdentifier(expr)).to.equal("sum");
+      });
+
+      test("type 'array' action 'create'", () => {
+        const expr = {
+          left: {
+            type: "array",
+            action: "create",
+            func: { type: "var", value: "list" }
+          }
+        };
+        expect(transpiler.getIdentifier(expr)).to.equal("list=[]");
+      });
+
+      test("throws errors if not a the correct type", () => {
+        expect(
+          transpiler.getIdentifier.bind(transpiler, { left: { type: "num" } })
+        ).to.throw();
+      });
+    });
+
+    describe("makeArrayIndex", () => {
+      test("returns the correct array index syntax", () => {
+        const expr = {
+          type: "array",
+          action: "index",
+          func: { value: "var", value: "H" },
+          args: [
+            { type: "var", value: "i" },
+            { type: "var", value: "j" },
+            { type: "var", value: "k" }
+          ]
+        };
+
+        expect(transpiler.makeArrayIndexing(expr)).to.match(
+          /H\[i\]\[j\]\[\k\]/
+        );
+      });
+    });
+
+    describe("checkArrayDimension", () => {
+      test("return the correct ternary expression", () => {
+        const expr = {
+          type: "array",
+          action: "index",
+          func: { value: "var", value: "H" },
+          args: [
+            { type: "var", value: "i" },
+            { type: "var", value: "j" },
+            { type: "var", value: "k" }
+          ]
+        };
+        expect(transpiler.checkArrayDimension(expr)).to.eql(
+          "H[i] ? \nH[i][j] ? \nH[i][j][k] ? \nnull \n: H[i][j][k]= [] \n: H[i][j]= [] \n: H[i]= []"
+        );
+      });
+    });
+
+    describe("genIndex", () => {
+      test("return the correct index syntax", () => {
+        const expr = {
+          args: [
+            { type: "var", value: "i" },
+            { type: "var", value: "j" },
+            { type: "var", value: "k" }
+          ]
+        };
+
+        expect(transpiler.genIndex(expr.args)).to.equal("[i][j][k]");
+      });
+    });
   });
 });

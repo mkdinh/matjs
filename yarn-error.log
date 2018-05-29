@@ -1,17 +1,17 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js test:watch -t lib index'
+  /usr/local/bin/node /usr/local/bin/yarn test
 
 PATH: 
-  C:\Program Files (x86)\Git\mingw32\bin;C:\Program Files (x86)\Git\usr\bin;C:\Users\mkdin\bin;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Microsoft MPI\Bin;C:\Program Files\Intel\iCLS Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\PharosSystems\Core;C:\Program Files\MATLAB\R2016b\runtime\win64;C:\Program Files\MATLAB\R2016b\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Dwimperl\perl\bin;C:\Dwimperl\perl\site\bin;C:\Dwimperl\c\bin;C:\Program Files (x86)\Git\cmd;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\ProgramData\chocolatey\bin;C:\WINDOWS\System32\OpenSSH;C:\Ruby24-x64\bin;C:\Users\mkdin\perl5\bin;C:\Users\mkdin\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Heroku\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;C:\sqlite;C:\Program Files\Microsoft VS Code\bin;C:\Users\mkdin\AppData\Roaming\npm
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
-  1.3.2
+  1.5.1
 
 Node version: 
-  8.6.0
+  9.10.1
 
 Platform: 
-  win32 x64
+  linux x64
 
 npm manifest: 
   {
@@ -25,7 +25,8 @@ npm manifest:
     },
     "scripts": {
       "test": "jest --colors",
-      "test:watch": "yarn test --watchAll"
+      "test:watch": "yarn test --watchAll",
+      "test:coverage": "jest --coverage"
     },
     "jest": {
       "verbose": true,
@@ -3212,14 +3213,16 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Line breaks can't be quoted on Windows
-      at quoteForCmd (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:119525:11)
-      at Formatter.quote (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:119684:12)
-      at ShellStringText.[format] (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:119735:28)
-      at children.map.child (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:120103:58)
-      at Array.map (<anonymous>)
-      at ShellString.[format] (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:120103:26)
-      at ShellString.toString (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:120099:30)
-      at sh (C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:120192:55)
-      at C:\Users\mkdin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:82947:54
-      at Generator.next (<anonymous>)
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c jest --colors
+  Directory: /home/michael/Documents/apps/matjs
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)

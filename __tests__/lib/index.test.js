@@ -12,10 +12,31 @@ global.eig = function(H) {
   return ["hello", "there"];
 };
 
-global.diag = function(H) {
-  console.log(H);
+global.print = function(msg) {
+  console.log(msg);
 };
 
+global.diag = function(H) {
+  console.log(H);
+  return [[], []];
+};
+
+global.plot = function() {
+  console.log("plot stuff");
+};
+
+global.scatter = function() {};
+
+global.ylim = function() {};
+
+global.xlim = function() {};
+
+global.xlabel = function() {};
+global.ylabel = function() {};
+global.set = function() {};
+global.title = function() {};
+global.gca = function() {};
+global.zeros = function() {};
 describe("Lib Index", () => {
   it("returns abstract syntax trees from provided Matlab code", () => {
     const transpiler = new Transpiler(file);

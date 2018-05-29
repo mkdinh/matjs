@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "jest --colors",
-    "test:watch": "yarn test --watchAll"
+    "test:watch": "yarn test --watchAll",
+    "test:coverage": "jest --coverage"
   },
   "jest": {
     "verbose": true,
