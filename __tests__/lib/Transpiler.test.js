@@ -40,15 +40,59 @@ describe("Transpiler", () => {
           type: "binary",
           op: "+",
           left: { type: "num", value: 1 },
-          right: { type: "num", value: 2 },
-        },
+          right: { type: "num", value: 2 }
+        }
       };
       expect(transpiler.jsBinary(expr)).to.equal("(sum=(1+2))");
     });
   });
 
+  describe("jsArray", () => {
+    test("action 'index' returns a array indexing string", () => {
+      const expr = {
+        type: "array",
+        action: "index",
+        func: { type: "var", value: "H" },
+        args: [
+          { type: "var", value: "i" },
+          { type: "var", value: "j" },
+          { type: "var", value: "k" }
+        ]
+      };
+
+      expect(transpiler.jsArray(expr)).to.equal("H[i][j][k]");
+    });
+
+    test("action 'create' returns delimited array string", () => {
+      const expr = {
+        type: "array",
+        action: "create",
+        elements: [
+          { type: "var", value: "i" },
+          { type: "var", value: "j" },
+          { type: "var", value: "k" }
+        ]
+      };
+      expect(transpiler.jsArray(expr)).to.equal("[i, j, k]");
+    });
+
+    test("action 'spread' returns variable assignment", () => {
+      const expr = {
+        type: "array",
+        action: "spread",
+        elements: [
+          { type: "var", value: "i" },
+          { type: "var", value: "j" },
+          { type: "var", value: "k" }
+        ]
+      };
+
+      expect(transpiler.jsArray(expr)).to.equal("var [i, j, k]");
+    });
+  });
+
   describe("jsAssign", () => {
-    it("returns stringfied assignment expression", () => {
+    test("returns stringified assignment expression", () => {
       const expr = {
         type: "assign",
         op: "=",
@@ -57,10 +101,10 @@ describe("Transpiler", () => {
           type: "binary",
           op: "+",
           left: { type: "num", value: 1 },
-          right: { type: "num", value: 2 },
-        },
+          right: { type: "num", value: 2 }
+        }
       };
-      expect(transpiler.jsAssign(expr)).to.equal("(sum=(1+2))");
+      expect(transpiler.jsAssign(expr)).to.equal("var sum=(1+2)");
     });
   });
 
@@ -74,21 +118,21 @@ describe("Transpiler", () => {
           op: "=",
           left: {
             type: "var",
-            value: "sum",
+            value: "sum"
           },
           right: {
             type: "binary",
             op: "+",
             left: {
               type: "num",
-              value: 1,
+              value: 1
             },
             right: {
               type: "num",
-              value: 2,
-            },
-          },
-        },
+              value: 2
+            }
+          }
+        }
       };
 
       logger(transpiler.jsFunc(expr));

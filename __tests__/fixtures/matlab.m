@@ -27,7 +27,7 @@ end
 %
 % OBTAIN EIGENVALES AND COEFFICIENTS
 %
-eigRes=eig(H);
+[E, C]=eig(H);
 %
 % PRINT RESULTS
 %

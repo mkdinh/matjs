@@ -14,6 +14,13 @@ describe("Parser", () => {
     tokenStream = null;
   });
 
+  it.only("returns ast without error", () => {
+    const code = `print([1.5 2.5])\n[a, b] = eig(H)`;
+    genParser(code);
+    const ast = parser.parse();
+    logger(ast);
+  });
+
   describe("Parse Methods", () => {
     describe("delimited", () => {
       genParser("(a, b, c)");
@@ -21,7 +28,7 @@ describe("Parser", () => {
         "(",
         ")",
         ",",
-        parser.parseVarName.bind(parser),
+        parser.parseVarName.bind(parser)
       ]);
 
       expect(args).to.eql(["a", "b", "c"]);
@@ -37,9 +44,15 @@ describe("Parser", () => {
           args: [
             { type: "var", value: "a" },
             { type: "var", value: "b" },
-            { type: "var", value: "c" },
-          ],
+            { type: "var", value: "c" }
+          ]
         });
+      });
+
+      it("returns type 'array' if call before a '='", () => {
+        genParser("(h, k) = beta");
+        const token = parser.parseCall.apply(parser, ["H"]);
+        expect(token.type).to.equal("array");
       });
     });
 
@@ -52,7 +65,7 @@ describe("Parser", () => {
       test("throw error if token type is not var", () => {
         genParser("123456");
         expect(parser.parseVarName.bind(parser)).to.throw(
-          /Expect variable name/,
+          /Expect variable name/
         );
       });
     });
@@ -69,8 +82,8 @@ describe("Parser", () => {
             type: "binary",
             op: "+",
             left: { type: "num", value: 1 },
-            right: { type: "num", value: 2 },
-          },
+            right: { type: "num", value: 2 }
+          }
         });
       });
     });
@@ -86,20 +99,20 @@ describe("Parser", () => {
             op: "=",
             left: {
               type: "var",
-              value: "i",
+              value: "i"
             },
             right: {
               type: "iterate",
               op: ":",
               left: {
                 type: "num",
-                value: 1,
+                value: 1
               },
               right: {
                 type: "var",
-                value: "s",
-              },
-            },
+                value: "s"
+              }
+            }
           },
           body: {
             type: "prog",
@@ -109,35 +122,35 @@ describe("Parser", () => {
                 op: "+=",
                 left: {
                   type: "var",
-                  value: "sum",
+                  value: "sum"
                 },
                 right: {
                   type: "var",
-                  value: "i",
-                },
+                  value: "i"
+                }
               },
               {
                 type: "assign",
                 op: "=",
                 left: {
                   type: "var",
-                  value: "sum",
+                  value: "sum"
                 },
                 right: {
                   type: "binary",
                   op: "/",
                   left: {
                     type: "var",
-                    value: "sum",
+                    value: "sum"
                   },
                   right: {
                     type: "num",
-                    value: 2,
-                  },
-                },
-              },
-            ],
-          },
+                    value: 2
+                  }
+                }
+              }
+            ]
+          }
         });
       });
     });
@@ -153,25 +166,25 @@ describe("Parser", () => {
             op: "<",
             left: {
               type: "var",
-              value: "sum",
+              value: "sum"
             },
             right: {
               type: "num",
-              value: 5,
-            },
+              value: 5
+            }
           },
           body: {
             type: "binary",
             op: "+=",
             left: {
               type: "var",
-              value: "sum",
+              value: "sum"
             },
             right: {
               type: "num",
-              value: 1,
-            },
-          },
+              value: 1
+            }
+          }
         });
       });
     });
@@ -179,7 +192,7 @@ describe("Parser", () => {
     describe("parseIf", () => {
       it("returns correct token", () => {
         genParser(
-          "if sum === 3\nprint('hello') \n else \n print('wah wah') \n end}",
+          "if sum === 3\nprint('hello') \n else \n print('wah wah') \n end}"
         );
         const token = parser.parseIf();
 
@@ -190,39 +203,39 @@ describe("Parser", () => {
             op: "===",
             left: {
               type: "var",
-              value: "sum",
+              value: "sum"
             },
             right: {
               type: "num",
-              value: 3,
-            },
+              value: 3
+            }
           },
           then: {
             type: "call",
             func: {
               type: "var",
-              value: "print",
+              value: "print"
             },
             args: [
               {
                 type: "str",
-                value: "hello",
-              },
-            ],
+                value: "hello"
+              }
+            ]
           },
           else: {
             type: "call",
             func: {
               type: "var",
-              value: "print",
+              value: "print"
             },
             args: [
               {
                 type: "str",
-                value: "wah wah",
-              },
-            ],
-          },
+                value: "wah wah"
+              }
+            ]
+          }
         });
       });
     });
@@ -239,21 +252,21 @@ describe("Parser", () => {
             op: "=",
             left: {
               type: "var",
-              value: "sum",
+              value: "sum"
             },
             right: {
               type: "binary",
               op: "+",
               left: {
                 type: "num",
-                value: 1,
+                value: 1
               },
               right: {
                 type: "num",
-                value: 2,
-              },
-            },
-          },
+                value: 2
+              }
+            }
+          }
         });
       });
     });
