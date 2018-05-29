@@ -1,0 +1,1203 @@
+{
+  "type": "prog",
+  "prog": [
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "var",
+        "value": "alpha"
+      },
+      "right": {
+        "type": "num",
+        "value": -6.8
+      }
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "var",
+        "value": "beta"
+      },
+      "right": {
+        "type": "num",
+        "value": -3.6
+      }
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "var",
+        "value": "clim"
+      },
+      "right": {
+        "type": "num",
+        "value": 6
+      }
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "var",
+        "value": "icyclic"
+      },
+      "right": {
+        "type": "num",
+        "value": 1
+      }
+    },
+    {
+      "type": "for",
+      "cond": {
+        "type": "assign",
+        "op": "=",
+        "left": {
+          "type": "var",
+          "value": "k"
+        },
+        "right": {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 1
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      },
+      "body": {
+        "type": "prog",
+        "prog": [
+          {
+            "type": "assign",
+            "op": "=",
+            "left": {
+              "type": "call",
+              "func": {
+                "type": "var",
+                "value": "H"
+              },
+              "args": [
+                {
+                  "type": "var",
+                  "value": "k"
+                },
+                {
+                  "type": "var",
+                  "value": "k"
+                }
+              ]
+            },
+            "right": {
+              "type": "var",
+              "value": "alpha"
+            }
+          },
+          null,
+          {
+            "type": "for",
+            "cond": {
+              "type": "assign",
+              "op": "=",
+              "left": {
+                "type": "var",
+                "value": "m"
+              },
+              "right": {
+                "type": "iterate",
+                "op": ":",
+                "left": {
+                  "type": "num",
+                  "value": 1
+                },
+                "right": {
+                  "type": "var",
+                  "value": "clim"
+                }
+              }
+            },
+            "body": {
+              "type": "prog",
+              "prog": [
+                {
+                  "type": "if",
+                  "cond": {
+                    "type": "binary",
+                    "op": "==",
+                    "left": {
+                      "type": "var",
+                      "value": "m"
+                    },
+                    "right": {
+                      "type": "binary",
+                      "op": "+",
+                      "left": {
+                        "type": "var",
+                        "value": "k"
+                      },
+                      "right": {
+                        "type": "num",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "then": {
+                    "type": "assign",
+                    "op": "=",
+                    "left": {
+                      "type": "call",
+                      "func": {
+                        "type": "var",
+                        "value": "H"
+                      },
+                      "args": [
+                        {
+                          "type": "var",
+                          "value": "k"
+                        },
+                        {
+                          "type": "var",
+                          "value": "m"
+                        }
+                      ]
+                    },
+                    "right": {
+                      "type": "var",
+                      "value": "beta"
+                    }
+                  }
+                },
+                null,
+                {
+                  "type": "assign",
+                  "op": "=",
+                  "left": {
+                    "type": "call",
+                    "func": {
+                      "type": "var",
+                      "value": "H"
+                    },
+                    "args": [
+                      {
+                        "type": "var",
+                        "value": "m"
+                      },
+                      {
+                        "type": "var",
+                        "value": "k"
+                      }
+                    ]
+                  },
+                  "right": {
+                    "type": "var",
+                    "value": "beta"
+                  }
+                },
+                null
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "if",
+      "cond": {
+        "type": "binary",
+        "op": "~=",
+        "left": {
+          "type": "var",
+          "value": "icyclic"
+        },
+        "right": {
+          "type": "num",
+          "value": 0
+        }
+      },
+      "then": {
+        "type": "assign",
+        "op": "=",
+        "left": {
+          "type": "call",
+          "func": {
+            "type": "var",
+            "value": "H"
+          },
+          "args": [
+            {
+              "type": "var",
+              "value": "clim"
+            },
+            {
+              "type": "num",
+              "value": 1
+            }
+          ]
+        },
+        "right": {
+          "type": "var",
+          "value": "beta"
+        }
+      }
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "call",
+        "func": {
+          "type": "var",
+          "value": "H"
+        },
+        "args": [
+          {
+            "type": "num",
+            "value": 1
+          },
+          {
+            "type": "var",
+            "value": "clim"
+          }
+        ]
+      },
+      "right": {
+        "type": "var",
+        "value": "beta"
+      }
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "variables",
+        "vars": [
+          "C",
+          "E"
+        ]
+      },
+      "right": {
+        "type": "call",
+        "func": {
+          "type": "var",
+          "value": "eig"
+        },
+        "args": [
+          {
+            "type": "var",
+            "value": "H"
+          }
+        ]
+      }
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "diag"
+      },
+      "args": [
+        {
+          "type": "var",
+          "value": "E"
+        }
+      ]
+    },
+    {
+      "type": "for",
+      "cond": {
+        "type": "assign",
+        "op": "=",
+        "left": {
+          "type": "var",
+          "value": "k"
+        },
+        "right": {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 1
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      },
+      "body": {
+        "type": "prog",
+        "prog": [
+          {
+            "type": "call",
+            "func": {
+              "type": "var",
+              "value": "plot"
+            },
+            "args": [
+              {
+                "type": "numericals",
+                "vars": [
+                  {
+                    "type": "num",
+                    "value": 1.5
+                  },
+                  {
+                    "type": "num",
+                    "value": 3.5
+                  }
+                ]
+              },
+              {
+                "type": "numericals",
+                "vars": [
+                  {
+                    "type": "binary",
+                    "op": "/",
+                    "left": {
+                      "type": "binary",
+                      "op": "/",
+                      "left": {
+                        "type": "binary",
+                        "op": "-",
+                        "left": {
+                          "type": "call",
+                          "func": {
+                            "type": "var",
+                            "value": "E"
+                          },
+                          "args": [
+                            {
+                              "type": "var",
+                              "value": "k"
+                            },
+                            {
+                              "type": "var",
+                              "value": "k"
+                            }
+                          ]
+                        },
+                        "right": {
+                          "type": "var",
+                          "value": "alpha"
+                        }
+                      },
+                      "right": {
+                        "type": "call",
+                        "func": {
+                          "type": "var",
+                          "value": "beta"
+                        },
+                        "args": [
+                          {
+                            "type": "binary",
+                            "op": "-",
+                            "left": {
+                              "type": "call",
+                              "func": {
+                                "type": "var",
+                                "value": "E"
+                              },
+                              "args": [
+                                {
+                                  "type": "var",
+                                  "value": "k"
+                                },
+                                {
+                                  "type": "var",
+                                  "value": "k"
+                                }
+                              ]
+                            },
+                            "right": {
+                              "type": "var",
+                              "value": "alpha"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "right": {
+                      "type": "var",
+                      "value": "beta"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "str",
+                "value": "linewidth"
+              },
+              {
+                "type": "num",
+                "value": 2
+              },
+              {
+                "type": "str",
+                "value": "color"
+              },
+              {
+                "type": "str",
+                "value": "b"
+              }
+            ]
+          },
+          null
+        ]
+      }
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "ylim"
+      },
+      "args": [
+        {
+          "type": "numericals",
+          "vars": [
+            {
+              "type": "num",
+              "value": -2.1
+            },
+            {
+              "type": "num",
+              "value": 2.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "var",
+        "value": "Cpos"
+      },
+      "right": {
+        "type": "binary",
+        "op": "+",
+        "left": {
+          "type": "call",
+          "func": {
+            "type": "var",
+            "value": "zeros"
+          },
+          "args": [
+            {
+              "type": "var",
+              "value": "clim"
+            },
+            {
+              "type": "var",
+              "value": "clim"
+            }
+          ]
+        },
+        "right": {
+          "type": "num",
+          "value": 1
+        }
+      }
+    },
+    {
+      "type": "var",
+      "value": "e"
+    },
+    {
+      "type": "num",
+      "value": -10
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "var",
+        "value": "Cneg"
+      },
+      "right": {
+        "type": "binary",
+        "op": "+",
+        "left": {
+          "type": "call",
+          "func": {
+            "type": "var",
+            "value": "zeros"
+          },
+          "args": [
+            {
+              "type": "var",
+              "value": "clim"
+            },
+            {
+              "type": "var",
+              "value": "clim"
+            }
+          ]
+        },
+        "right": {
+          "type": "num",
+          "value": 1
+        }
+      }
+    },
+    {
+      "type": "var",
+      "value": "e"
+    },
+    {
+      "type": "num",
+      "value": -10
+    },
+    {
+      "type": "for",
+      "cond": {
+        "type": "assign",
+        "op": "=",
+        "left": {
+          "type": "var",
+          "value": "j"
+        },
+        "right": {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 1
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      },
+      "body": {
+        "type": "prog",
+        "prog": [
+          {
+            "type": "for",
+            "cond": {
+              "type": "assign",
+              "op": "=",
+              "left": {
+                "type": "var",
+                "value": "jj"
+              },
+              "right": {
+                "type": "iterate",
+                "op": ":",
+                "left": {
+                  "type": "num",
+                  "value": 1
+                },
+                "right": {
+                  "type": "var",
+                  "value": "clim"
+                }
+              }
+            },
+            "body": {
+              "type": "prog",
+              "prog": [
+                {
+                  "type": "if",
+                  "cond": {
+                    "type": "binary",
+                    "op": "<",
+                    "left": {
+                      "type": "call",
+                      "func": {
+                        "type": "var",
+                        "value": "C"
+                      },
+                      "args": [
+                        {
+                          "type": "var",
+                          "value": "j"
+                        },
+                        {
+                          "type": "var",
+                          "value": "jj"
+                        }
+                      ]
+                    },
+                    "right": {
+                      "type": "num",
+                      "value": 0
+                    }
+                  },
+                  "then": {
+                    "type": "assign",
+                    "op": "=",
+                    "left": {
+                      "type": "call",
+                      "func": {
+                        "type": "var",
+                        "value": "Cneg"
+                      },
+                      "args": [
+                        {
+                          "type": "var",
+                          "value": "jj"
+                        },
+                        {
+                          "type": "var",
+                          "value": "j"
+                        }
+                      ]
+                    },
+                    "right": {
+                      "type": "binary",
+                      "op": "*",
+                      "left": {
+                        "type": "num",
+                        "left": -1
+                      },
+                      "right": {
+                        "type": "call",
+                        "func": {
+                          "type": "var",
+                          "value": "C"
+                        },
+                        "args": [
+                          {
+                            "type": "var",
+                            "value": "j"
+                          },
+                          {
+                            "type": "var",
+                            "value": "jj"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                null
+              ]
+            }
+          },
+          {
+            "type": "if",
+            "cond": {
+              "type": "binary",
+              "op": ">",
+              "left": {
+                "type": "call",
+                "func": {
+                  "type": "var",
+                  "value": "C"
+                },
+                "args": [
+                  {
+                    "type": "var",
+                    "value": "j"
+                  },
+                  {
+                    "type": "var",
+                    "value": "jj"
+                  }
+                ]
+              },
+              "right": {
+                "type": "num",
+                "value": 0
+              }
+            },
+            "then": {
+              "type": "assign",
+              "op": "=",
+              "left": {
+                "type": "call",
+                "func": {
+                  "type": "var",
+                  "value": "Cpos"
+                },
+                "args": [
+                  {
+                    "type": "var",
+                    "value": "jj"
+                  },
+                  {
+                    "type": "var",
+                    "value": "j"
+                  }
+                ]
+              },
+              "right": {
+                "type": "call",
+                "func": {
+                  "type": "var",
+                  "value": "C"
+                },
+                "args": [
+                  {
+                    "type": "var",
+                    "value": "j"
+                  },
+                  {
+                    "type": "var",
+                    "value": "jj"
+                  }
+                ]
+              }
+            }
+          },
+          null
+        ]
+      }
+    },
+    {
+      "type": "if",
+      "cond": {
+        "type": "binary",
+        "op": "<",
+        "left": {
+          "type": "var",
+          "value": "clim"
+        },
+        "right": {
+          "type": "num",
+          "value": 21
+        }
+      },
+      "then": {
+        "type": "assign",
+        "op": "=",
+        "left": {
+          "type": "var",
+          "value": "x"
+        },
+        "right": {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 1
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      }
+    },
+    {
+      "type": "assign",
+      "op": "=",
+      "left": {
+        "type": "call",
+        "func": {
+          "type": "var",
+          "value": "y"
+        },
+        "args": [
+          {
+            "type": "var",
+            "value": "x"
+          }
+        ]
+      },
+      "right": {
+        "type": "num",
+        "value": 0
+      }
+    },
+    {
+      "type": "for",
+      "cond": {
+        "type": "assign",
+        "op": "=",
+        "left": {
+          "type": "var",
+          "value": "k"
+        },
+        "right": {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 1
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      },
+      "body": {
+        "type": "prog",
+        "prog": [
+          {
+            "type": "call",
+            "func": {
+              "type": "var",
+              "value": "scatter"
+            },
+            "args": [
+              {
+                "type": "var",
+                "value": "x"
+              },
+              {
+                "type": "binary",
+                "op": "+",
+                "left": {
+                  "type": "var",
+                  "value": "y"
+                },
+                "right": {
+                  "type": "var",
+                  "value": "k"
+                }
+              },
+              {
+                "type": "binary",
+                "op": "*",
+                "left": {
+                  "type": "num",
+                  "value": 1000
+                },
+                "right": {
+                  "type": "call",
+                  "func": {
+                    "type": "var",
+                    "value": "Cneg"
+                  },
+                  "args": [
+                    {
+                      "type": "var",
+                      "value": "k"
+                    },
+                    {
+                      "type": "var",
+                      "value": "x"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "str",
+                "value": "fill"
+              },
+              {
+                "type": "str",
+                "value": "MarkerEdgeColor"
+              },
+              {
+                "type": "str",
+                "value": "r"
+              },
+              {
+                "type": "str",
+                "value": "MarkerFaceColor"
+              },
+              {
+                "type": "str",
+                "value": "r"
+              }
+            ]
+          },
+          null,
+          {
+            "type": "var",
+            "value": "hold"
+          },
+          {
+            "type": "var",
+            "value": "on"
+          },
+          null,
+          {
+            "type": "call",
+            "func": {
+              "type": "var",
+              "value": "scatter"
+            },
+            "args": [
+              {
+                "type": "var",
+                "value": "x"
+              },
+              {
+                "type": "binary",
+                "op": "+",
+                "left": {
+                  "type": "var",
+                  "value": "y"
+                },
+                "right": {
+                  "type": "var",
+                  "value": "k"
+                }
+              },
+              {
+                "type": "binary",
+                "op": "*",
+                "left": {
+                  "type": "num",
+                  "value": 1000
+                },
+                "right": {
+                  "type": "call",
+                  "func": {
+                    "type": "var",
+                    "value": "Cpos"
+                  },
+                  "args": [
+                    {
+                      "type": "var",
+                      "value": "k"
+                    },
+                    {
+                      "type": "var",
+                      "value": "x"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "str",
+                "value": "fill"
+              },
+              {
+                "type": "str",
+                "value": "MarkerEdgeColor"
+              },
+              {
+                "type": "str",
+                "value": "b"
+              },
+              {
+                "type": "str",
+                "value": "MarkerFaceColor"
+              },
+              {
+                "type": "str",
+                "value": "b"
+              }
+            ]
+          },
+          null,
+          {
+            "type": "var",
+            "value": "hold"
+          },
+          {
+            "type": "var",
+            "value": "on"
+          },
+          null
+        ]
+      }
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "set"
+      },
+      "args": [
+        {
+          "type": "var",
+          "value": "gca"
+        },
+        {
+          "type": "str",
+          "value": "ytick"
+        },
+        {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 0
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "set"
+      },
+      "args": [
+        {
+          "type": "var",
+          "value": "gca"
+        },
+        {
+          "type": "str",
+          "value": "xtick"
+        },
+        {
+          "type": "iterate",
+          "op": ":",
+          "left": {
+            "type": "num",
+            "value": 0
+          },
+          "right": {
+            "type": "var",
+            "value": "clim"
+          }
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "xlim"
+      },
+      "args": [
+        {
+          "type": "numericals",
+          "vars": [
+            {
+              "type": "num",
+              "value": 0.5
+            },
+            {
+              "type": "binary",
+              "op": "+",
+              "left": {
+                "type": "var",
+                "value": "clim"
+              },
+              "right": {
+                "type": "num",
+                "value": 0.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "ylim"
+      },
+      "args": [
+        {
+          "type": "numericals",
+          "vars": [
+            {
+              "type": "num",
+              "value": 0.5
+            },
+            {
+              "type": "binary",
+              "op": "+",
+              "left": {
+                "type": "var",
+                "value": "clim"
+              },
+              "right": {
+                "type": "num",
+                "value": 0.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "xlabel"
+      },
+      "args": [
+        {
+          "type": "str",
+          "value": "Atomic Index"
+        },
+        {
+          "type": "str",
+          "value": "fontsize"
+        },
+        {
+          "type": "num",
+          "value": 16
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "ylabel"
+      },
+      "args": [
+        {
+          "type": "str",
+          "value": "State Index"
+        },
+        {
+          "type": "str",
+          "value": "fontsize"
+        },
+        {
+          "type": "num",
+          "value": 16
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "set"
+      },
+      "args": [
+        {
+          "type": "var",
+          "value": "gca"
+        },
+        {
+          "type": "str",
+          "value": "fontsize"
+        },
+        {
+          "type": "num",
+          "value": 12
+        },
+        {
+          "type": "str",
+          "value": "linewidth"
+        },
+        {
+          "type": "num",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "func": {
+        "type": "var",
+        "value": "title"
+      },
+      "args": [
+        {
+          "type": "str",
+          "value": "Molecular Orbital Coefficients"
+        }
+      ]
+    }
+  ]
+}
