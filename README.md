@@ -9,6 +9,5 @@ Adoption of Lisperator's transpiler for matlab code
  git clone git@github.com:mkdinh/matjs.git
  cd matjs
  npm install
- 
  ```
    
