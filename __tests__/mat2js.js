@@ -6,8 +6,10 @@ var beta;
 var clim;
 var icyclic;
 var H;
+var C;
+var E;
 
-;
+var _fabgbfjbfh=[];
 
 alpha=-6.8; 
 beta=-3.6; 
@@ -23,9 +25,11 @@ __indexArray(H, m, k)[k-1]=beta
 }
 }
 }; 
-print(clim); 
+display(H); 
 if ((icyclic !== 0)) {
 __indexArray(H, clim, 1)[1-1]=beta; 
 __indexArray(H, 1, clim)[clim-1]=beta
 }; 
-print(H)
+_fabgbfjbfh=__indexArray(eig, H)[H-1]
+C=_fabgbfjbfh[0]
+E=_fabgbfjbfh[1]
