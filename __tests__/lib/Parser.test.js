@@ -46,16 +46,11 @@ describe("Parser", () => {
     describe("parseCall", () => {
       it("returns correct token", () => {
         genParser("(a, b, c)");
-        const token = parser.parseCall.apply(parser, ["print"]);
-        expect(token).to.eql({
-          type: "call",
-          func: "print",
-          args: [
-            { type: "var", value: "a" },
-            { type: "var", value: "b" },
-            { type: "var", value: "c" }
-          ]
-        });
+        const token = parser.parseCall.apply(parser, [
+          { type: "var", name: "display" }
+        ]);
+        expect(token.type).to.eql("call");
+        expect(token.func).to.eql({ type: "var", name: "display" });
       });
 
       it("returns type 'array' if call before a '='", () => {
@@ -204,48 +199,10 @@ describe("Parser", () => {
           "if sum === 3\nprint('hello') \n else \n print('wah wah') \n end}"
         );
         const token = parser.parseIf();
-
-        expect(token).to.eql({
-          type: "if",
-          cond: {
-            type: "binary",
-            op: "===",
-            left: {
-              type: "var",
-              value: "sum"
-            },
-            right: {
-              type: "num",
-              value: 3
-            }
-          },
-          then: {
-            type: "call",
-            func: {
-              type: "var",
-              value: "print"
-            },
-            args: [
-              {
-                type: "str",
-                value: "hello"
-              }
-            ]
-          },
-          else: {
-            type: "call",
-            func: {
-              type: "var",
-              value: "print"
-            },
-            args: [
-              {
-                type: "str",
-                value: "wah wah"
-              }
-            ]
-          }
-        });
+        logger(token);
+        expect(token.type).to.equal("if");
+        expect(token.then).to.be.instanceof(Object);
+        expect(token.else).to.be.instanceof(Object);
       });
     });
 

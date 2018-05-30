@@ -8,8 +8,10 @@ var icyclic;
 var H;
 var C;
 var E;
+var Cpos;
+var Cneg;
 
-var _fabgbfjbfh=[];
+var _hebiifiddd=[];
 
 alpha=-6.8; 
 beta=-3.6; 
@@ -25,11 +27,24 @@ __indexArray(H, m, k)[k-1]=beta
 }
 }
 }; 
-display(H); 
 if ((icyclic !== 0)) {
 __indexArray(H, clim, 1)[1-1]=beta; 
 __indexArray(H, 1, clim)[clim-1]=beta
 }; 
-_fabgbfjbfh=__indexArray(eig, H)[H-1]
-C=_fabgbfjbfh[0]
-E=_fabgbfjbfh[1]
+_hebiifiddd=eig(H)
+C=_hebiifiddd[0]
+E=_hebiifiddd[1]; 
+E=diag(E); 
+Cpos=__binaryArray("+", zeros(clim, clim), 1e-10); 
+Cneg=__binaryArray("+", zeros(clim, clim), 1e-10); 
+for (var j=1; j <= clim; j++) {
+	for (var jj=1; jj <= clim; jj++) {
+	if ((__indexArray(C, j, jj)[jj-1]<0)) {
+__indexArray(Cneg, jj, j)[j-1]=(-1*__indexArray(C, j, jj)[jj-1])
+}; 
+if ((__indexArray(C, j, jj)[jj-1]>0)) {
+__indexArray(Cpos, jj, j)[j-1]=__indexArray(C, j, jj)[jj-1]
+}
+}
+}; 
+display(Cneg)

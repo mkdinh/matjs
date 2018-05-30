@@ -22,7 +22,6 @@ for k=1:clim
         end
 end
 
-display(H)
 
 if icyclic ~= 0
     H(clim,1)=beta;
@@ -32,3 +31,22 @@ end
 % OBTAIN EIGENVALES AND COEFFICIENTS
 %
 [C, E]=eig(H);
+
+E= diag(E);
+
+% SHUFFLE POSITIVE AND NEGATIVE COEFFICIENTS
+%
+Cpos=zeros(clim,clim)+1e-10;
+Cneg=zeros(clim,clim)+1e-10;
+for j=1:clim
+    for jj=1:clim
+        if C(j,jj) < 0
+            Cneg(jj,j)= -C(j,jj);
+        end
+        if C(j,jj) > 0
+            Cpos(jj,j)=C(j,jj);
+        end
+    end
+end
+
+display(Cneg)

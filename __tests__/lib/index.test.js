@@ -10,16 +10,6 @@ const file = fs.readFileSync(
 
 Object.assign(global, primitiveFuncs);
 
-global.eig = function(H) {
-  let Hmatrix = [];
-
-  return [H, H[0]];
-};
-
-global.diag = function(H) {
-  return [[], []];
-};
-
 global.plot = function() {
   console.log("plot stuff");
 };
@@ -44,8 +34,8 @@ describe("Lib Index", () => {
     const transpiler = new Transpiler(file);
     const res = transpiler.toJS();
     try {
-      fs.writeFileSync(__dirname + "/../mat2js.js", res);
-      const data = fs.readFileSync(__dirname + "/../mat2js.js", "utf8");
+      // fs.writeFileSync(__dirname + "/../mat2js.js", res);
+      // const data = fs.readFileSync(__dirname + "/../mat2js.js", "utf8");
       Function(data)();
     } catch (err) {
       console.log(err);
