@@ -1,10 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const Transpiler = require("./lib/Transpiler");
-
+const jbinary = require("jbinary");
 const file = fs.readFileSync(
   path.join(__dirname, "__tests__/fixtures/matlab.m"),
-  "utf8",
+  "utf8"
 );
 
 global.eig = function(H) {
@@ -26,7 +26,7 @@ global.zeros = function() {
   if (dimensions.length > 0) {
     var dim = dimensions[0];
     delete dimensions[0];
-    var newArray = new Array();
+    var newArray = new Array(index).map(Number.prototype.valueOf, 0);
     for (var i = 0; i < dim; i++) {
       newArray[i] = zeros(...dimensions);
     }
@@ -55,9 +55,9 @@ global.gca = function() {};
 const transpiler = new Transpiler(file);
 const res = transpiler.toJS();
 
-try {
-  fs.writeFileSync(__dirname + "/mat2js.js", res);
-  Function(res).apply(global);
-} catch (err) {
-  console.log(err);
-}
+// try {
+//   fs.writeFileSync(__dirname + "/mat2js.js", res);
+//   Function(res).apply(global);
+// } catch (err) {
+//   console.log(err);
+// }

@@ -14,8 +14,15 @@
   },
   "jest": {
     "verbose": true,
-    "testMatch": ["**/?(*.)(spec|test).js?(x)"],
-    "testPathIgnorePatterns": ["/node_modules/"],
+    "testMatch": [
+      "**/?(*.)(spec|test).js?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
     "setupTestFrameworkScriptFile": "./__tests__/setupTests.js"
+  },
+  "dependencies": {
+    "jbinary": "^2.1.3"
   }
 }

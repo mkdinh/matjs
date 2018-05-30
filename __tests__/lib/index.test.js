@@ -5,7 +5,7 @@ const Transpiler = require("../../lib/Transpiler");
 
 const file = fs.readFileSync(
   path.join(__dirname, "../fixtures/matlab.m"),
-  "utf8",
+  "utf8"
 );
 global.eig = function(H) {
   let Hmatrix = [];
@@ -14,7 +14,7 @@ global.eig = function(H) {
 };
 
 global.print = function(msg) {
-  // console.log(msg);
+  console.log(msg);
 };
 
 global.diag = function(H) {
@@ -52,14 +52,36 @@ global.set = function() {};
 global.title = function() {};
 global.gca = function() {};
 
-global._indexArray = function() {
-  const [array, ...dimensions] = arguments;
-  if (dimensions.length) {
-    var index = dimensions[0];
-    if (!Array.isArray(array.index)) array[index] = this._indexArray();
-    else return array;
+global.__indexArray = function() {
+  let [array, ...dimensions] = arguments;
+  if (!array) {
+    array = Array.apply(null, Array(dimensions[0] - 1)).map(
+      Number.prototype.valueOf,
+      0
+    );
+  }
+
+  if (dimensions.length > 1) {
+    var index = dimensions[0] - 1;
+    dimensions.shift();
+    return (array[index] = __indexArray(dive(index), ...dimensions));
   } else {
     return array;
+  }
+
+  function fillInEmpty(subarray, nextDimSize) {
+    if (subarray.length < nextDimSize) {
+      for (let i = 0; i < nextDimSize; i++) {
+        if (!subarray[i]) subarray[i] = 0;
+      }
+    }
+  }
+
+  function dive(index) {
+    return array.filter((el, idx) => {
+      fillInEmpty(el, dimensions[0]);
+      return idx === index;
+    })[0];
   }
 };
 global.title = function() {};
@@ -70,7 +92,7 @@ describe("Lib Index", () => {
     const transpiler = new Transpiler(file);
     const res = transpiler.toJS();
     try {
-      // fs.writeFileSync(__dirname + "/../mat2js.js", res);
+      fs.writeFileSync(__dirname + "/../mat2js.js", res);
       const data = fs.readFileSync(__dirname + "/../mat2js.js", "utf8");
       Function(data)();
     } catch (err) {
