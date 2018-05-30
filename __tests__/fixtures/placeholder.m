@@ -35,7 +35,7 @@ Cneg=zeros(clim,clim)+1e-10;
 for j=1:clim
     for jj=1:clim
         if C(j,jj) < 0
-            Cneg(jj,j)=-C(j,jj);
+            Cneg(jj,j)= -C(j,jj);
         end
         if C(j,jj) > 0
             Cpos(jj,j)=C(j,jj);

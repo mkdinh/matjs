@@ -47,8 +47,8 @@ describe("Transpiler", () => {
           type: "binary",
           op: "+",
           left: { type: "num", value: 1 },
-          right: { type: "num", value: 2 }
-        }
+          right: { type: "num", value: 2 },
+        },
       };
       expect(transpiler.jsBinary(expr)).to.equal("(sum=(1+2))");
     });
@@ -63,8 +63,8 @@ describe("Transpiler", () => {
         args: [
           { type: "var", value: "i" },
           { type: "var", value: "j" },
-          { type: "var", value: "k" }
-        ]
+          { type: "var", value: "k" },
+        ],
       };
 
       expect(transpiler.jsArray(expr)).to.match(/H\[i\]\[j\]\[k\]/);
@@ -77,8 +77,8 @@ describe("Transpiler", () => {
         elements: [
           { type: "var", value: "i" },
           { type: "var", value: "j" },
-          { type: "var", value: "k" }
-        ]
+          { type: "var", value: "k" },
+        ],
       };
       expect(transpiler.jsArray(expr)).to.equal("[i, j, k]");
     });
@@ -90,8 +90,8 @@ describe("Transpiler", () => {
         elements: [
           { type: "var", value: "i" },
           { type: "var", value: "j" },
-          { type: "var", value: "k" }
-        ]
+          { type: "var", value: "k" },
+        ],
       };
 
       expect(transpiler.jsArray(expr)).to.equal("var [i, j, k]");
@@ -108,8 +108,8 @@ describe("Transpiler", () => {
           type: "binary",
           op: "+",
           left: { type: "num", value: 1 },
-          right: { type: "num", value: 2 }
-        }
+          right: { type: "num", value: 2 },
+        },
       };
       expect(transpiler.jsAssign(expr)).to.equal("sum=(1+2)");
     });
@@ -125,21 +125,21 @@ describe("Transpiler", () => {
           op: "=",
           left: {
             type: "var",
-            value: "sum"
+            value: "sum",
           },
           right: {
             type: "binary",
             op: "+",
             left: {
               type: "num",
-              value: 1
+              value: 1,
             },
             right: {
               type: "num",
-              value: 2
-            }
-          }
-        }
+              value: 2,
+            },
+          },
+        },
       };
 
       expect(transpiler.jsFunc(expr)).to.match(/\(function(.*){.*}\)/);
@@ -185,8 +185,8 @@ describe("Transpiler", () => {
           left: {
             type: "array",
             action: "spread",
-            identifier: { type: "var", value: "sum" }
-          }
+            identifier: { type: "var", value: "sum" },
+          },
         };
         expect(transpiler.getIdentifier(expr)).to.equal("sum");
       });
@@ -196,15 +196,15 @@ describe("Transpiler", () => {
           left: {
             type: "array",
             action: "create",
-            func: { type: "var", value: "list" }
-          }
+            func: { type: "var", value: "list" },
+          },
         };
         expect(transpiler.getIdentifier(expr)).to.equal("list=[]");
       });
 
       test("throws errors if not a the correct type", () => {
         expect(
-          transpiler.getIdentifier.bind(transpiler, { left: { type: "num" } })
+          transpiler.getIdentifier.bind(transpiler, { left: { type: "num" } }),
         ).to.throw();
       });
     });
@@ -218,12 +218,12 @@ describe("Transpiler", () => {
           args: [
             { type: "var", value: "i" },
             { type: "var", value: "j" },
-            { type: "var", value: "k" }
-          ]
+            { type: "var", value: "k" },
+          ],
         };
 
         expect(transpiler.makeArrayIndexing(expr)).to.match(
-          /H\[i\]\[j\]\[\k\]/
+          /H\[i\]\[j\]\[\k\]/,
         );
       });
     });
@@ -237,11 +237,11 @@ describe("Transpiler", () => {
           args: [
             { type: "var", value: "i" },
             { type: "var", value: "j" },
-            { type: "var", value: "k" }
-          ]
+            { type: "var", value: "k" },
+          ],
         };
         expect(transpiler.checkArrayDimension(expr)).to.eql(
-          "H[i] ? \nH[i][j] ? \nH[i][j][k] ? \nnull \n: H[i][j][k]= [] \n: H[i][j]= [] \n: H[i]= []"
+          "H[i] ? \nH[i][j] ? \nH[i][j][k] ? \nnull \n: H[i][j][k]= [] \n: H[i][j]= [] \n: H[i]= []",
         );
       });
     });
@@ -252,8 +252,8 @@ describe("Transpiler", () => {
           args: [
             { type: "var", value: "i" },
             { type: "var", value: "j" },
-            { type: "var", value: "k" }
-          ]
+            { type: "var", value: "k" },
+          ],
         };
 
         expect(transpiler.genIndex(expr.args)).to.equal("[i][j][k]");

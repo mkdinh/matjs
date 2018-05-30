@@ -25,6 +25,10 @@ if icyclic ~= 0
     H(1,clim)=beta;
 end
 
+% OBTAIN EIGENVALES AND COEFFICIENTS
+%
+[E, C]=eig(H);
+
 
 % SHUFFLE POSITIVE AND NEGATIVE COEFFICIENTS
 %
@@ -32,18 +36,15 @@ Cpos=zeros(clim,clim)+1e-10;
 Cneg=zeros(clim,clim)+1e-10;
 for j=1:clim
     for jj=1:clim
+        print(C)
         if C(j,jj) < 0
-            Cneg(jj,j)=-C(j,jj);
+            Cneg(jj,j)= -1* C(j,jj);
         end
         if C(j,jj) > 0
             Cpos(jj,j)=C(j,jj);
         end
     end
 end
-
-% OBTAIN EIGENVALES AND COEFFICIENTS
-%
-[E, C]=eig(H);
 
 %
 % PRINT RESULTS
@@ -75,10 +76,8 @@ if clim <21
     x=1:clim;
     y(x)=0;
     for k=1:clim
-        scatter(x,y+k,1000*Cneg(k,x),'fill','MarkerEdgeColor','r','MarkerFaceColor','r');
-        hold on;
-        scatter(x,y+k,1000*Cpos(k,x),'fill','MarkerEdgeColor','b','MarkerFaceColor','b');
-        hold on;
+        scatter(x,y+k,1000 * Cneg(k,x),'fill','MarkerEdgeColor','r','MarkerFaceColor','r');
+        scatter(x,y+k,1000 * Cpos(k,x),'fill','MarkerEdgeColor','b','MarkerFaceColor','b');
     end
     set(gca,'ytick',0:clim);set(gca,'xtick',0:clim)
     xlim([0.5 clim+0.5]);ylim([0.5 clim+0.5])

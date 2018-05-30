@@ -1,12 +1,12 @@
 const fs = require("fs");
 const path = require("path");
-const Parser = require("../../lib");
-const Transpiler = require("../../lib/Transpiler");
+const Transpiler = require("./lib/Transpiler");
 
 const file = fs.readFileSync(
-  path.join(__dirname, "../fixtures/matlab.m"),
+  path.join(__dirname, "__tests__/fixtures/matlab.m"),
   "utf8",
 );
+
 global.eig = function(H) {
   let Hmatrix = [];
 
@@ -52,29 +52,12 @@ global.set = function() {};
 global.title = function() {};
 global.gca = function() {};
 
-global._indexArray = function() {
-  const [array, ...dimensions] = arguments;
-  if (dimensions.length) {
-    var index = dimensions[0];
-    if (!Array.isArray(array.index)) array[index] = this._indexArray();
-    else return array;
-  } else {
-    return array;
-  }
-};
-global.title = function() {};
-global.gca = function() {};
-global.zeros = function() {};
-describe("Lib Index", () => {
-  it("returns abstract syntax trees from provided Matlab code", () => {
-    const transpiler = new Transpiler(file);
-    const res = transpiler.toJS();
-    try {
-      // fs.writeFileSync(__dirname + "/../mat2js.js", res);
-      const data = fs.readFileSync(__dirname + "/../mat2js.js", "utf8");
-      Function(data)();
-    } catch (err) {
-      console.log(err);
-    }
-  });
-});
+const transpiler = new Transpiler(file);
+const res = transpiler.toJS();
+
+try {
+  fs.writeFileSync(__dirname + "/mat2js.js", res);
+  Function(res).apply(global);
+} catch (err) {
+  console.log(err);
+}
