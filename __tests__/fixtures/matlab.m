@@ -6,7 +6,6 @@ beta=-3.6; %off-diagonal element of Hamiltonian
 clim=6; % number of carbon atoms
 icyclic=1; % set icyclic equal to number other than zero to make ring
 H = [];
-y = []
 %
 % BELOW PROGRAM EXECUTES INSTRUCTIONS GIVEN IN LINES 5-8
 %
@@ -52,7 +51,7 @@ for j=1:clim
         end
     end
 end
-
+display(Cpos, Cneg)
 
 % PLOT THE ENERGY LEVEL DIAGRAM
 %
