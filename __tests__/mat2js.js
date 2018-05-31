@@ -10,15 +10,21 @@ var C;
 var E;
 var Cpos;
 var Cneg;
-var x;
 
-var _eijgabbadg=[];
+var H=[];
+var _ejehfhbffh=[];
+var C=[];
+var Cneg=[];
+var Cpos=[];
+var E=[];
+var beta=[];
+var x=[];
+var y=[];
 
 alpha=-6.8; 
 beta=-3.6; 
 clim=6; 
 icyclic=1; 
-H=[]; 
 for (var k=1; k <= clim; k++) {
 	__indexArray(H, k, k)[k-1]=alpha; 
 for (var m=1; m <= clim; m++) {
@@ -32,9 +38,10 @@ if ((icyclic !== 0)) {
 __indexArray(H, clim, 1)[1-1]=beta; 
 __indexArray(H, 1, clim)[clim-1]=beta
 }; 
-_eijgabbadg=eig(H)
-C=_eijgabbadg[0]
-E=_eijgabbadg[1]; 
+display(H); 
+_ejehfhbffh=eig(H)
+C=_ejehfhbffh[0]
+E=_ejehfhbffh[1]; 
 E=diag(E); 
 Cpos=__binaryArray("+", zeros(clim, clim), 1e-10); 
 Cneg=__binaryArray("+", zeros(clim, clim), 1e-10); 
@@ -49,7 +56,6 @@ __indexArray(Cpos, jj, j)[j-1]=__indexArray(C, j, jj)[jj-1]
 }
 }
 }; 
-display(Cpos, Cneg); 
 for (var k=1; k <= clim; k++) {
 	plot([1.5, 3.5], [(((__indexArray(E, k, k)[k-1]-alpha)/__indexArray(beta, (__indexArray(E, k, k)[k-1]-alpha))[undefined-1])/beta)], "linewidth", 2, "color", "b")
 }; 
@@ -72,8 +78,8 @@ __indexArray(Cpos, jj, j)[j-1]=__indexArray(C, j, jj)[jj-1]
 }; 
 if ((clim<21)) {
 x=__iterateArray(1,clim); 
-__indexArray(y, x)[x-1]; 
-display(y, "hello"); 
+__iterateArray(y, x); 
+display(y); 
 for (var k=1; k <= clim; k++) {
 	false
 }; 

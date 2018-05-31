@@ -1,11 +1,11 @@
 %
 % SET UP PARAMETERS
 %
+
 alpha=-6.8; %diagonal element of Hamiltonian
 beta=-3.6; %off-diagonal element of Hamiltonian
 clim=6; % number of carbon atoms
 icyclic=1; % set icyclic equal to number other than zero to make ring
-H = [];
 %
 % BELOW PROGRAM EXECUTES INSTRUCTIONS GIVEN IN LINES 5-8
 %
@@ -30,8 +30,8 @@ end
 
 % OBTAIN EIGENVALES AND COEFFICIENTS
 %
+display(H)
 [C, E]=eig(H);
-
 E= diag(E);
 
 % SHUFFLE POSITIVE AND NEGATIVE COEFFICIENTS
@@ -51,7 +51,6 @@ for j=1:clim
         end
     end
 end
-display(Cpos, Cneg)
 
 % PLOT THE ENERGY LEVEL DIAGRAM
 %
@@ -85,8 +84,8 @@ end
 %
 if clim <21
     x=1:clim;
-    y(x)
-    display(y, "hello")
+   y(x)
+       display(y)
     for k=1:clim
         %scatter(x,y+k,1000*Cneg(k,x),'fill','MarkerEdgeColor','r','MarkerFaceColor','r');
         %scatter(x,y+k,1000*Cpos(k,x),'fill','MarkerEdgeColor','b','MarkerFaceColor','b');
