@@ -12,7 +12,7 @@ var Cpos;
 var Cneg;
 
 var H=[];
-var _ejehfhbffh=[];
+var _eijdgfbfjh=[];
 var C=[];
 var Cneg=[];
 var Cpos=[];
@@ -38,10 +38,9 @@ if ((icyclic !== 0)) {
 __indexArray(H, clim, 1)[1-1]=beta; 
 __indexArray(H, 1, clim)[clim-1]=beta
 }; 
-display(H); 
-_ejehfhbffh=eig(H)
-C=_ejehfhbffh[0]
-E=_ejehfhbffh[1]; 
+_eijdgfbfjh=eig(H)
+C=_eijdgfbfjh[0]
+E=_eijdgfbfjh[1]; 
 E=diag(E); 
 Cpos=__binaryArray("+", zeros(clim, clim), 1e-10); 
 Cneg=__binaryArray("+", zeros(clim, clim), 1e-10); 
@@ -81,7 +80,8 @@ x=__iterateArray(1,clim);
 __iterateArray(y, x); 
 display(y); 
 for (var k=1; k <= clim; k++) {
-	false
+	scatter(x, (y+k), (1000*__indexArray(Cneg, k, x)[x-1]), "fill", "MarkerEdgeColor", "r", "MarkerFaceColor", "r"); 
+scatter(x, (y+k), (1000*__indexArray(Cpos, k, x)[x-1]), "fill", "MarkerEdgeColor", "b", "MarkerFaceColor", "b")
 }; 
 set(gca, "ytick", __iterateArray(0,clim)); 
 set(gca, "xtick", __iterateArray(0,clim)); 

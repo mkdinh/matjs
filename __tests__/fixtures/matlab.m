@@ -30,7 +30,6 @@ end
 
 % OBTAIN EIGENVALES AND COEFFICIENTS
 %
-display(H)
 [C, E]=eig(H);
 E= diag(E);
 
@@ -87,8 +86,8 @@ if clim <21
    y(x)
        display(y)
     for k=1:clim
-        %scatter(x,y+k,1000*Cneg(k,x),'fill','MarkerEdgeColor','r','MarkerFaceColor','r');
-        %scatter(x,y+k,1000*Cpos(k,x),'fill','MarkerEdgeColor','b','MarkerFaceColor','b');
+        scatter(x,y+k,1000*Cneg(k,x),'fill','MarkerEdgeColor','r','MarkerFaceColor','r');
+        scatter(x,y+k,1000*Cpos(k,x),'fill','MarkerEdgeColor','b','MarkerFaceColor','b');
     end
     set(gca,'ytick',0:clim);set(gca,'xtick',0:clim)
     xlim([0.5 clim+0.5]);ylim([0.5 clim+0.5])
